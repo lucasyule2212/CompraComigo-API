@@ -34,7 +34,6 @@ admin.initializeApp({
   credential: admin.credential.cert(firebaseConfig),
   databaseURL: `https://${firebaseConfig.projectId}.firebaseio.com`,
 });
-
 const firestore = admin.firestore();
 fireorm.initialize(firestore);
 
@@ -45,4 +44,3 @@ if (firestore) {
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
-
