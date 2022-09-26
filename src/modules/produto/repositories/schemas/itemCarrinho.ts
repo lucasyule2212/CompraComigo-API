@@ -1,13 +1,12 @@
-import { Collection } from "fireorm";
-
 class ItemCarrinho {
   // código de barras
-  id: number | string;
+  id: string;
   nome: string;
   preco: number;
-  valorTotal: number;
   quantidade: number;
+  categoria: string;
   image: string;
   priorizado: boolean;
+  valorTotal: number;
 }
 export default ItemCarrinho;
