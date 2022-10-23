@@ -95,7 +95,7 @@ export default class ProdutosController {
       const carrinhoEconomicoFiltrado = carrinhoEconomico.filter(
         (item) => item.opcoes.length > 0
       );
-        
+
       // return the sum of the cheapest suggestion for each item
       const valorTotalCarrinhoEconomico = carrinhoEconomicoFiltrado.reduce(
         (total: number, item: any) =>
@@ -115,7 +115,7 @@ export default class ProdutosController {
         valorTotalCarrinho - valorTotalCarrinhoEconomico;
 
       // se não houver diferença de valor, retorna o carrinho atual
-      if (diferencaEconomia === 0) {
+      if (diferencaEconomia === 0 || valorTotalCarrinhoEconomico === 0) {
         return res
           .status(200)
           .json({ carrinhoEconomico: carrinho, valorTotalEconomia: null });
