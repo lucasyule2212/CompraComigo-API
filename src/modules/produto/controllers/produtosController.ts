@@ -91,9 +91,13 @@ export default class ProdutosController {
           };
         })
       );
-
+      // filter items that dont have suggestions
+      const carrinhoEconomicoFiltrado = carrinhoEconomico.filter(
+        (item) => item.opcoes.length > 0
+      );
+        
       // return the sum of the cheapest suggestion for each item
-      const valorTotalCarrinhoEconomico = carrinhoEconomico.reduce(
+      const valorTotalCarrinhoEconomico = carrinhoEconomicoFiltrado.reduce(
         (total: number, item: any) =>
           total + item.opcoes[0].valor * item.quantidade,
         0
@@ -110,9 +114,14 @@ export default class ProdutosController {
       const diferencaEconomia =
         valorTotalCarrinho - valorTotalCarrinhoEconomico;
 
+      // se não houver diferença de valor, retorna o carrinho atual
+      if (diferencaEconomia === 0) {
+        return res
+          .status(200)
+          .json({ carrinhoEconomico: carrinho, valorTotalEconomia: null });
+      }
+
       // se a diferença de economia for maior que o orçamento, retorna o carrinho atual e a diferença de economia como -1
-        console.log(diferencaEconomia, orcamento);
-        
       if (diferencaEconomia > orcamento) {
         return res.status(200).json({
           carrinhoEconomico: carrinho,
@@ -120,6 +129,7 @@ export default class ProdutosController {
         });
       }
 
+      // se a diferença de economia for menor que o orçamento, retorna o carrinho econômico e a diferença de economia
       return res
         .status(200)
         .json({ valorTotalEconomia: diferencaEconomia, carrinhoEconomico });
